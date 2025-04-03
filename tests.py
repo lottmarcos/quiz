@@ -131,4 +131,48 @@ def test_choice_ids_are_sequential():
     question.remove_choice_by_id(choice2.id)
     choice4 = question.add_choice('d', False)
 
-    assert choice4.id == 4  # IDs should still increment, not reuse deleted IDs
+    assert choice4.id == 4
+
+
+@pytest.fixture
+def question_with_choices():
+    question = Question(title='Quiz Question')
+    question.add_choice('Choice A', True)
+    question.add_choice('Choice B', False)
+    question.add_choice('Choice C', False)
+    return question
+
+@pytest.fixture
+def advanced_quiz():
+    question = Question(title='Advanced Question', points=5, max_selections=2)
+    question.add_choice('First choice', True)
+    question.add_choice('Second choice', True)
+    question.add_choice('Third choice', False)
+    question.add_choice('Fourth choice', False)
+    return question
+
+def test_correct_choice_identification(question_with_choices):
+    correct_choices = [choice.id for choice in question_with_choices.choices if choice.is_correct]
+    assert len(correct_choices) == 1
+
+    assert question_with_choices.choices[0].id == correct_choices[0]
+    assert question_with_choices.choices[0].is_correct
+    assert not question_with_choices.choices[1].is_correct
+    assert not question_with_choices.choices[2].is_correct
+
+def test_multiple_selection_question(advanced_quiz):
+    assert advanced_quiz.title == 'Advanced Question'
+    assert advanced_quiz.points == 5
+    assert advanced_quiz.max_selections == 2
+
+    correct_choice_ids = [choice.id for choice in advanced_quiz.choices if choice.is_correct]
+    assert len(correct_choice_ids) == 2
+
+    selected = advanced_quiz.select_choices(correct_choice_ids)
+    assert len(selected) == 2
+    assert correct_choice_ids[0] in selected
+    assert correct_choice_ids[1] in selected
+
+    partial_selection = advanced_quiz.select_choices([correct_choice_ids[0]])
+    assert len(partial_selection) == 1
+    assert correct_choice_ids[0] in partial_selection
