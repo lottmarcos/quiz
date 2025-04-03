@@ -1,7 +1,6 @@
 import pytest
 from model import Question
 
-
 def test_create_question():
     question = Question(title='q1')
     assert question.id != None
@@ -27,7 +26,6 @@ def test_create_question_with_valid_points():
 
 def test_create_choice():
     question = Question(title='q1')
-    
     question.add_choice('a', False)
 
     choice = question.choices[0]
