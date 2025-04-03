@@ -1,6 +1,6 @@
 [![tests](https://github.com/andrehora/quiz/actions/workflows/tests.yml/badge.svg)](https://github.com/andrehora/quiz/actions/workflows/tests.yml)
 
-# Quiz testing example
+# Quiz testing example - UFMG
 
 Neste exercício, iremos melhorar os testes de unidade de sistema de quiz.
 Você deve realizar os 3 commits descritos abaixo e submeter os 3 links dos commits via Moodle.
@@ -20,7 +20,7 @@ def test_create_question():
 
 def test_create_choice():
     question = Question(title='q1')
-    
+
     question.add_choice('a', False)
 
     choice = question.choices[0]
@@ -76,7 +76,7 @@ Para executar os testes localmente, basta rodar o comando `pytest -v tests.py`:
 ```
 $ pytest -v tests.py
 ========================================== test session starts ===========================================
-...                                                                                     
+...
 tests.py::test_create_question PASSED                                                              [ 20%]
 tests.py::test_create_multiple_questions PASSED                                                    [ 40%]
 tests.py::test_create_question_with_invalid_title PASSED                                           [ 60%]
@@ -90,7 +90,7 @@ tests.py::test_create_choice PASSED                                             
 Os testes são executados automaticamente no GitHub Actions sempre que um commit é realizado.
 Portanto, para rodar os testes no GitHub Actions, realize uma alteração qualquer neste arquivo `README.md` e faça o commit da alteração com a seguinte mensagem: *Commit 1: Running the tests*.
 
-Em seguida, clique na aba `Actions` e veja que os testes foram executados com sucesso no GitHub Actions. 
+Em seguida, clique na aba `Actions` e veja que os testes foram executados com sucesso no GitHub Actions.
 Observe as execuções em múltiplos sistemas operacionais e versões da linguagem Python.
 
 # Commit 2: Creating 10 unit tests
